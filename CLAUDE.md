@@ -40,7 +40,7 @@ range after a miss costs more than one honest full read.
 
 ## yq
 
-Query the path you need instead of reading a whole YAML file.
+Reading tool. Query the path you need instead of reading a whole YAML file.
 Also reads JSON, TOML, XML, and .properties — set `-p` / `-o` to convert.
 
 - See the shape before querying it:
@@ -48,8 +48,15 @@ Also reads JSON, TOML, XML, and .properties — set `-p` / `-o` to convert.
   lists every path with array indices collapsed — 2-3% of the file's size.
 - Input format is inferred for `.json`/`.yaml`/`.toml`; `.xml` and
   `.properties` need `-p xml` / `-p props`.
-- Edit YAML with `yq -i '<expr>' <file>`, not Read plus Edit. It keeps
-  comments and indentation that hand-editing breaks.
+- Write with Edit, not `yq -i`. In-place edits normalize inline-comment
+  alignment and fold `>` blocks onto one line, so lines you never touched
+  land in the diff. Comments, anchors and `|` blocks do survive, so `-i` is
+  fine for bulk rewrites — check the diff.
+- Default to `-N`. Reach for `ea` only to aggregate across documents: under
+  `ea`, string concatenation becomes a cross-product. It does not error, it
+  silently returns wrong output.
 - Expressions apply to every document in a multi-document file. Narrow with
   `select(...)` when only one is meant to change.
-- Re-read the changed region after an in-place edit.
+- Never put `kubectl ... -o yaml` into context raw — `managedFields`,
+  `last-applied-configuration` and `status` are most of it. Filtering eight
+  Deployments down to the fields in question went 32,900 -> 220 tokens.

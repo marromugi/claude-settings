@@ -154,8 +154,8 @@ def main():
         how = (
             f"Don't read structured data as text. `{schema}` prints the schema with "
             f"array indices collapsed, typically 2-3% of a full read. Then pull only the "
-            f"paths you need with `yq {pflag}'<path>' '{quoted}'`, and change values in "
-            f"place with `yq -i` rather than Read plus Edit."
+            f"paths you need with `yq {pflag}'<path>' '{quoted}'`. Use yq to read, not to "
+            f"write — `yq -i` reformats lines it never touched, so edit with Edit."
         )
     else:
         how = (
