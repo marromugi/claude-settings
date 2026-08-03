@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$HOME/.claude/hooks/large-read-guard.py\"",
+            "timeout": 5,
+            "statusMessage": "Checking read size"
+          }
+        ]
+      }
+    ]
+  },
+  "model": "opus[1m]",
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
+  "effortLevel": "high",
+  "advisorModel": "fable",
+  "tui": "fullscreen",
+  "agentPushNotifEnabled": true
+}

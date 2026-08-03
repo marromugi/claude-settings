@@ -1,0 +1,7 @@
+# hook が吐く実行時ログ。効果測定には使うが履歴には残さない。
+hooks/*.log
+
+# ~/.claude 側の実行時キャッシュを誤って持ち込んだとき用
+stats-cache.json
+mcp-needs-auth-cache.json
+.DS_Store
