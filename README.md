@@ -7,7 +7,7 @@ CLAUDE.md                  全プロジェクト共通の指示 (ast-grep / Read
 settings.json              モデル、権限、プラグイン、hooks の配線
 statusline-command.sh      settings.json の statusLine から参照される
 hooks/
-  large-read-guard.py      大きいファイルの全文読みを止め、構造を先に取らせる
+  outliner.py      大きいファイルの全文読みを止め、構造を先に取らせる
 ```
 
 ## 導入
@@ -17,8 +17,8 @@ git clone <this repo> ~/Lab/claude-settings
 cd ~/Lab/claude-settings
 mkdir -p ~/.claude/hooks
 cp CLAUDE.md settings.json statusline-command.sh ~/.claude/
-cp hooks/large-read-guard.py ~/.claude/hooks/
-chmod +x ~/.claude/hooks/large-read-guard.py ~/.claude/statusline-command.sh
+cp hooks/outliner.py ~/.claude/hooks/
+chmod +x ~/.claude/hooks/outliner.py ~/.claude/statusline-command.sh
 ```
 
 依存: `ast-grep`、`yq` (v4)、`jq`、`python3`。
@@ -31,7 +31,7 @@ chmod +x ~/.claude/hooks/large-read-guard.py ~/.claude/statusline-command.sh
 - `permissions` — allow / deny ルール
 - `enabledPlugins` — LSP などのプラグイン
 
-## large-read-guard
+## outliner
 
 `PreToolUse` / matcher `Read`。`offset` も `limit` もない Read が 8KB 超のテキスト
 ファイルに向いたときだけ差し込み、構造を先に取るよう促して deny する。
@@ -53,9 +53,9 @@ chmod +x ~/.claude/hooks/large-read-guard.py ~/.claude/statusline-command.sh
 
 | 変数 | 既定 | 意味 |
 | --- | --- | --- |
-| `CLAUDE_LARGE_READ_MODE` | `deny` | `deny` / `warn` (通すが助言) / `off` |
-| `CLAUDE_LARGE_READ_BYTES` | `8000` | 発動する閾値バイト数 (≒ 2,000 tok) |
-| `CLAUDE_LARGE_READ_LOG` | `~/.claude/hooks/large-read-guard.log` | ログ出力先 |
+| `CLAUDE_OUTLINER_MODE` | `deny` | `deny` / `warn` (通すが助言) / `off` |
+| `CLAUDE_OUTLINER_BYTES` | `8000` | 発動する閾値バイト数 (≒ 2,000 tok) |
+| `CLAUDE_OUTLINER_LOG` | `~/.claude/hooks/outliner.log` | ログ出力先 |
 
 ### なぜ deny なのか
 

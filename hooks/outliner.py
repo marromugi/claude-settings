@@ -6,20 +6,20 @@ offset/limit のない Read = 「全体が必要」という宣言。それが�
 offset か limit が付いていれば常に素通しなので、これがそのまま逃げ道になる。
 
 環境変数:
-  CLAUDE_LARGE_READ_MODE   deny(既定) | warn | off
-  CLAUDE_LARGE_READ_BYTES  発動する閾値バイト数 (既定 8000 ≒ 2,000 tok)
-  CLAUDE_LARGE_READ_LOG    ログ出力先 (既定 ~/.claude/hooks/large-read-guard.log)
+  CLAUDE_OUTLINER_MODE   deny(既定) | warn | off
+  CLAUDE_OUTLINER_BYTES  発動する閾値バイト数 (既定 8000 ≒ 2,000 tok)
+  CLAUDE_OUTLINER_LOG    ログ出力先 (既定 ~/.claude/hooks/outliner.log)
 """
 import json
 import os
 import re
 import sys
 
-MODE = os.environ.get("CLAUDE_LARGE_READ_MODE", "deny")
-THRESH = int(os.environ.get("CLAUDE_LARGE_READ_BYTES", "8000"))
+MODE = os.environ.get("CLAUDE_OUTLINER_MODE", "deny")
+THRESH = int(os.environ.get("CLAUDE_OUTLINER_BYTES", "8000"))
 LOG = os.environ.get(
-    "CLAUDE_LARGE_READ_LOG",
-    os.path.expanduser("~/.claude/hooks/large-read-guard.log"),
+    "CLAUDE_OUTLINER_LOG",
+    os.path.expanduser("~/.claude/hooks/outliner.log"),
 )
 
 # 画像・データ・巨大生成物。outline も見出しも効かないので対象外。

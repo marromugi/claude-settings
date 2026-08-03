@@ -5,3 +5,6 @@ hooks/*.log
 stats-cache.json
 mcp-needs-auth-cache.json
 .DS_Store
+
+# 分析中に import したときの副産物
+__pycache__/

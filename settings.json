@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"$HOME/.claude/hooks/large-read-guard.py\"",
+            "command": "python3 \"$HOME/.claude/hooks/outliner.py\"",
             "timeout": 5,
             "statusMessage": "Checking read size"
           }
